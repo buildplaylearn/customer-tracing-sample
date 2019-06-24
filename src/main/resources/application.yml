@@ -1,0 +1,23 @@
+---
+micronaut:
+  application:
+    name: br.com.tracing.customer
+
+---
+datasources.default: {}
+
+jpa:
+  default:
+    package-to-scan:
+      - 'br.com.tracing.entity'
+    properties:
+      hibernate:
+        hbm2ddl:
+          auto: update
+        show_sql: true
+
+tracing:
+  jaeger:
+    enabled: true
+    sampler:
+      probability: 1
