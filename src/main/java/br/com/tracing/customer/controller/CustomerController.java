@@ -5,6 +5,7 @@ import br.com.tracing.customer.service.CustomerService;
 import io.micronaut.http.MediaType;
 import io.micronaut.http.annotation.*;
 import io.micronaut.tracing.annotation.ContinueSpan;
+import io.micronaut.tracing.annotation.NewSpan;
 import io.micronaut.tracing.annotation.SpanTag;
 import io.micronaut.validation.Validated;
 
@@ -22,7 +23,7 @@ public class CustomerController {
         this.customerService = customerService;
     }
 
-    @ContinueSpan
+    @NewSpan
     @Post(consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
     public CustomerDTO save(@SpanTag("x.circle.id") @Header @NotBlank String xCircleId,
                             @Body CustomerDTO customerDTO) {
