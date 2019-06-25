@@ -2,6 +2,7 @@ package br.com.tracing.customer.service;
 
 import br.com.tracing.customer.dto.CustomerDTO;
 import br.com.tracing.customer.entity.Customer;
+import br.com.tracing.customer.exception.CreateCustomerErrorException;
 import br.com.tracing.customer.exception.ResourceNotFoundException;
 import br.com.tracing.customer.repository.CustomerRepository;
 
@@ -21,10 +22,16 @@ public class CustomerService {
 
     public CustomerDTO saveCustomer(CustomerDTO customerDTO){
 
-        Customer customer = customerDTO.toEntity();
-        customer.setId(UUID.randomUUID().toString());
+        try {
 
-        return this.customerRepository.save(customer).toDto();
+            Customer customer = customerDTO.toEntity();
+            customer.setId(UUID.randomUUID().toString());
+
+            return this.customerRepository.save(customer).toDto();
+
+        }catch (Exception e){
+            throw new CreateCustomerErrorException("Create customer error.",e);
+        }
     }
 
     public CustomerDTO findCustomerById(String id) {
